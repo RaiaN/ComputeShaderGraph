@@ -1,0 +1,26 @@
+// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
+
+/*=============================================================================
+	ComputeShader.usf: Simple template compute shader
+=============================================================================*/
+
+#include "Common.ush"
+
+#ifndef Type
+#define Type float4
+#endif
+
+Type ClearColor;
+
+
+#if COMPUTESHADER
+RWTexture2D<Type> ClearTextureRW;
+uint4 TargetBounds; //xy upperleft, zw lowerright
+
+[numthreads(8,8,1)]
+void ClearTexture2DCS(uint2 Position : SV_DispatchThreadID)
+{
+	ClearTextureRW[Position] = ClearColor;
+}
+
+#endif // COMPUTESHADER
