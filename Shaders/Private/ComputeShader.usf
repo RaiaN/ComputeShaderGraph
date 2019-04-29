@@ -4,23 +4,23 @@
 	ComputeShader.usf: Simple template compute shader
 =============================================================================*/
 
-#include "Common.ush"
-
-#ifndef Type
-#define Type float4
-#endif
-
-Type ClearColor;
+#include "/Engine/Private/Common.ush"
 
 
-#if COMPUTESHADER
-RWTexture2D<Type> ClearTextureRW;
-uint4 TargetBounds; //xy upperleft, zw lowerright
+
+float4 ClearColor;
+RWTexture2D<uint> ClearTextureRW; 
 
 [numthreads(8,8,1)]
 void ClearTexture2DCS(uint2 Position : SV_DispatchThreadID)
 {
-	ClearTextureRW[Position] = ClearColor;
+    // ClearColor = float4(255, 255, 255, 0);
+    
+    uint r = ClearColor.r;
+	uint g = ((uint)(ClearColor.g)) << 8;
+	uint b = ((uint)(ClearColor.b)) << 16;
+    uint a = ((uint)(ClearColor.a)) << 24;
+
+    ClearTextureRW[Position] = 255;
 }
 
-#endif // COMPUTESHADER

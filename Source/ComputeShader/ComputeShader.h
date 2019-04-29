@@ -7,15 +7,18 @@
 #include "ShaderParameters.h"
 #include "Shader.h"
 #include "GlobalShader.h"
+#include "UniformBuffer.h"
+#include "RHICommandList.h"
+
 
 
 template< typename T >
-class FClearTexture2DReplacementCS : public FGlobalShader
+class FTestFillTextureCS : public FGlobalShader
 {
-	DECLARE_EXPORTED_SHADER_TYPE(FClearTexture2DReplacementCS, Global, COMPUTESHADER_API);
+	DECLARE_EXPORTED_SHADER_TYPE(FTestFillTextureCS, Global, COMPUTESHADER_API);
 public:
-	FClearTexture2DReplacementCS() {}
-	FClearTexture2DReplacementCS(const ShaderMetaType::CompiledShaderInitializerType& Initializer)
+    FTestFillTextureCS() {}
+    FTestFillTextureCS(const ShaderMetaType::CompiledShaderInitializerType& Initializer)
 	: FGlobalShader( Initializer )
 	{
 		ClearColor.Bind(Initializer.ParameterMap, TEXT("ClearColor"), SPF_Mandatory);
@@ -30,8 +33,10 @@ public:
 		return bShaderHasOutdatedParameters;
 	}
 	
-	COMPUTESHADER_API void SetParameters(FRHICommandList& RHICmdList, FUnorderedAccessViewRHIParamRef TextureRW, const T(&Values)[4]);
-	COMPUTESHADER_API void FinalizeParameters(FRHICommandList& RHICmdList, FUnorderedAccessViewRHIParamRef TextureRW);
+	COMPUTESHADER_API void SetParameters(FRHICommandList& RHICmdList, FUnorderedAccessViewRHIRef TextureRW, const FColor& ClearColorValue);
+
+    void UnbindBuffers(FRHICommandList& RHICmdList);
+
 	
 	static bool ShouldCompilePermutation(const FGlobalShaderPermutationParameters& Parameters)
 	{
@@ -41,7 +46,6 @@ public:
 	static void ModifyCompilationEnvironment(const FGlobalShaderPermutationParameters& Parameters, FShaderCompilerEnvironment& OutEnvironment)
 	{
 		FGlobalShader::ModifyCompilationEnvironment(Parameters, OutEnvironment);
-		OutEnvironment.SetDefine( TEXT("Type"), TIsSame< T, float >::Value ? TEXT("float4") : TEXT("uint4") );
 	}
 	
 	const FShaderParameter& GetClearColorParameter()

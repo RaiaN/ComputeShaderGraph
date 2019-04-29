@@ -4,10 +4,14 @@ namespace UnrealBuildTool.Rules
 	{
 		public ComputeShader(ReadOnlyTargetRules Target) : base(Target)
         {
+            bEnforceIWYU = true;
+
             PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-    
-			PublicDependencyModuleNames.AddRange(
+            MinFilesUsingPrecompiledHeaderOverride = 1;
+            bFasterWithoutUnity = true;
+
+            PublicDependencyModuleNames.AddRange(
 				new string[]
 				{
 					"Core",
