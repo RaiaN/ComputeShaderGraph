@@ -6,8 +6,6 @@ namespace UnrealBuildTool.Rules
         {
             bEnforceIWYU = true;
 
-            PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-
             MinFilesUsingPrecompiledHeaderOverride = 1;
             bFasterWithoutUnity = true;
 

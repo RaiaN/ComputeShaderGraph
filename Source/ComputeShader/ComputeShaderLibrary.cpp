@@ -4,6 +4,7 @@
 #include "RHIResources.h"
 #include "GlobalShader.h"
 #include "RHICommandList.h"
+#include "RenderUtils.h"
 #include "Shader.h"
 #include "TextureResource.h"
 #include "UObject/UnrealType.h"
@@ -12,43 +13,23 @@
 PRAGMA_DISABLE_OPTIMIZATION
 
 
-#define NUM_THREADS_PER_GROUP_DIMENSION 8 //This has to be the same as in the compute shader's spec [X, X, 1]
 
-
-void ReadComputeShaderResult(FRHICommandListImmediate& RHICmdList, FTexture2DRHIRef Texture)
+void ReadComputeShaderResult(FRHICommandListImmediate& RHICmdList, FRWBufferStructured& Buffer)
 {
+    const uint32 NumBytes = Buffer.NumBytes;
+    const uint32 BytesToRead = Buffer.NumBytes / Buffer.Buffer->GetStride();
+
+    TArray<uint32> BufferColorBytes;
+    BufferColorBytes.SetNum(BytesToRead);
+
+    uint32* BufferToRead = (uint32*)RHICmdList.LockStructuredBuffer(Buffer.Buffer, 0, NumBytes, RLM_ReadOnly);
+    FMemory::Memcpy(BufferColorBytes.GetData(), BufferToRead, BytesToRead);
+    RHIUnlockStructuredBuffer(Buffer.Buffer);
+
+    UE_LOG(LogTemp, Warning, TEXT("Size: %d"), BufferColorBytes.Num());
+
+   
     TArray<FColor> Bitmap;
-
-    //To access our resource we do a custom read using lockrect
-    uint32 Stride = 0;
-    char* TextureDataPtr = (char*)RHICmdList.LockTexture2D(Texture, 0, EResourceLockMode::RLM_ReadOnly, Stride, false);
-
-    for (uint32 Row = 0; Row < Texture->GetSizeY(); ++Row)
-    {
-        uint32* RowDataPtr = (uint32*)TextureDataPtr;
-
-        //Since we are using our custom UINT format, we need to unpack it here to access the actual colors
-        for (uint32 Col = 0; Col < Texture->GetSizeX(); ++Col)
-        {
-            uint32 EncodedPixel = *RowDataPtr; 
-            uint8 r = (EncodedPixel & 0x000000FF);
-            uint8 g = (EncodedPixel & 0x0000FF00) >> 8;
-            uint8 b = (EncodedPixel & 0x00FF0000) >> 16;
-            uint8 a = (EncodedPixel & 0xFF000000) >> 24;
-
-            Bitmap.Add(FColor(r, g, b, a));
-
-            RowDataPtr++;
-        }
-
-        TextureDataPtr += Stride;
-    }
-
-    RHIUnlockTexture2D(Texture, 0, false);
-
-    UE_LOG(LogTemp, Warning, TEXT("Size: %d"), Bitmap.Num());
-
-    
 
     // if the format and texture type is supported
     if (Bitmap.Num())
@@ -58,10 +39,7 @@ void ReadComputeShaderResult(FRHICommandListImmediate& RHICmdList, FTexture2DRHI
 
         const FString ScreenFileName(FPaths::ScreenShotDir() / TEXT("VisualizeTexture"));
 
-        // uint32 ExtendXWithMSAA = Bitmap.Num() / ;
-
-        // Save the contents of the array to a bitmap file. (24bit only so alpha channel is dropped)
-        FFileHelper::CreateBitmap(*ScreenFileName, Texture->GetSizeX(), Texture->GetSizeY(), Bitmap.GetData());
+        // FFileHelper::CreateBitmap(*ScreenFileName, NumBytes / Buffer.Buffer->st, NumBytes / 4, Bitmap.GetData());
 
         UE_LOG(LogTemp, Display, TEXT("Content was saved to \"%s\""), *FPaths::ScreenShotDir());
     }
@@ -79,46 +57,32 @@ void InnerUseComputeShader()
 
     TShaderMapRef<FTestFillTextureCS<float>> ComputeShader(GetGlobalShaderMap(GMaxRHIFeatureLevel));
 
-    FRHIResourceCreateInfo ResourceCreateInfo;
+    const uint32 Size = 512;
 
-    FTexture2DRHIRef Texture2DRHIRef = RHICreateTexture2D(
-        256, //InTexture->GetSizeX(),
-        256, //InTexture->GetSizeY(),
-        PF_R32_UINT,
-        1,
-        1,
-        TexCreate_ShaderResource | TexCreate_UAV,
-        ResourceCreateInfo
-    );
-    FUnorderedAccessViewRHIRef TextureUAV = RHICreateUnorderedAccessView(Texture2DRHIRef);
+    EPixelFormat BufferFormat = PF_A32B32G32R32F;
+    uint32 BytesPerElement = GPixelFormats[BufferFormat].BlockBytes;
 
-    
-    // FIXME: color not passed to compute shader
-    ComputeShader->SetParameters(RHICmdList, TextureUAV, FColor::Red);
- 
+    FRWBufferStructured* RWBufferStructured = new FRWBufferStructured();
+    RWBufferStructured->Initialize(BytesPerElement, Size);
+
     FComputeShaderRHIParamRef ShaderRHI = ComputeShader->GetComputeShader();
     RHICmdList.SetComputeShader(ShaderRHI);
-   
-    uint32 x = Texture2DRHIRef->GetSizeX() / NUM_THREADS_PER_GROUP_DIMENSION;
-    uint32 y = Texture2DRHIRef->GetSizeY() / NUM_THREADS_PER_GROUP_DIMENSION;
 
-    RHICmdList.DispatchComputeShader(x, y, 1);
-
+    // FIXME: color not passed to compute shader
+    ComputeShader->SetParameters(RHICmdList, *RWBufferStructured, FColor(255, 255, 128, 128), Size);
+    RHICmdList.DispatchComputeShader(Size, 1, 1);
     ComputeShader->UnbindBuffers(RHICmdList);
 
-    ReadComputeShaderResult(RHICmdList, Texture2DRHIRef);
-
+    ReadComputeShaderResult(RHICmdList, *RWBufferStructured);
 }
 
 void UComputeShaderLibrary::UseEngineComputeShader(UTexture2D* InTexture)
 {
-    ENQUEUE_UNIQUE_RENDER_COMMAND_ONEPARAMETER(
-        FSetTextureColorCommand,
-        UTexture2D*, Texture, InTexture,
-        {
-            InnerUseComputeShader();
-        }
-    );
+    ENQUEUE_RENDER_COMMAND(FSetTextureColorCommand)(
+    [](FRHICommandList& RHICmdList)
+    {
+        InnerUseComputeShader();
+    });
 }
 
 PRAGMA_ENABLE_OPTIMIZATION

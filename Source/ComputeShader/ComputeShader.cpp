@@ -8,17 +8,13 @@
 
 
 template< typename T >
-void FTestFillTextureCS<T>::SetParameters( FRHICommandList& RHICmdList, FUnorderedAccessViewRHIRef TextureRW, const FColor& ClearColorValue)
+void FTestFillTextureCS<T>::SetParameters(FRHICommandList& RHICmdList, const FRWBufferStructured& TextureRW, const FColor& InFillColor, const uint32 InSize)
 {
 	FComputeShaderRHIParamRef ComputeShaderRHI = GetComputeShader();
     
-    SetShaderValue(RHICmdList, ComputeShaderRHI, ClearColor, FVector4(ClearColorValue));
-  
-
-    if (ClearTextureRW.IsBound())
-    {
-        RHICmdList.SetUAVParameter(ComputeShaderRHI, ClearTextureRW.GetBaseIndex(), TextureRW);
-    }
+    SetShaderValue(RHICmdList, ComputeShaderRHI, FillColor, InFillColor.ToPackedRGBA());
+    SetShaderValue(RHICmdList, ComputeShaderRHI, Size, InSize);
+    SetUAVParameter(RHICmdList, ComputeShaderRHI, OutputBufferRW, TextureRW.UAV);
 }
 
 template< typename T >
@@ -26,9 +22,9 @@ void FTestFillTextureCS<T>::UnbindBuffers(FRHICommandList& RHICmdList)
 {
     FComputeShaderRHIParamRef ComputeShaderRHI = GetComputeShader();
 
-    if (ClearTextureRW.IsBound())
+    if (OutputBufferRW.IsBound())
     {
-        RHICmdList.SetUAVParameter(ComputeShaderRHI, ClearTextureRW.GetBaseIndex(), FUnorderedAccessViewRHIRef());
+        RHICmdList.SetUAVParameter(ComputeShaderRHI, OutputBufferRW.GetBaseIndex(), FUnorderedAccessViewRHIRef());
     }
 }
 
@@ -36,5 +32,5 @@ void FTestFillTextureCS<T>::UnbindBuffers(FRHICommandList& RHICmdList)
 template class FTestFillTextureCS<float>;
 template class FTestFillTextureCS<uint32>;
 
-IMPLEMENT_SHADER_TYPE(template<>, FTestFillTextureCS<float>, TEXT("/Plugin/ComputeShader/Private/ComputeShader.usf"), TEXT("ClearTexture2DCS"), SF_Compute);
-IMPLEMENT_SHADER_TYPE(template<>, FTestFillTextureCS<uint32>, TEXT("/Plugin/ComputeShader/Private/ComputeShader.usf"), TEXT("ClearTexture2DCS"), SF_Compute);
+IMPLEMENT_SHADER_TYPE(template<>, FTestFillTextureCS<float>, TEXT("/Plugin/ComputeShader/Private/ComputeShader.usf"), TEXT("FillBuffer"), SF_Compute);
+IMPLEMENT_SHADER_TYPE(template<>, FTestFillTextureCS<uint32>, TEXT("/Plugin/ComputeShader/Private/ComputeShader.usf"), TEXT("FillBuffer"), SF_Compute);

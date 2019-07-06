@@ -21,19 +21,20 @@ public:
     FTestFillTextureCS(const ShaderMetaType::CompiledShaderInitializerType& Initializer)
 	: FGlobalShader( Initializer )
 	{
-		ClearColor.Bind(Initializer.ParameterMap, TEXT("ClearColor"), SPF_Mandatory);
-		ClearTextureRW.Bind(Initializer.ParameterMap, TEXT("ClearTextureRW"), SPF_Mandatory);
+        FillColor.Bind(Initializer.ParameterMap, TEXT("FillColor"), SPF_Mandatory);
+        Size.Bind(Initializer.ParameterMap, TEXT("Size"));
+        OutputBufferRW.Bind(Initializer.ParameterMap, TEXT("OutputBufferRW"), SPF_Mandatory);
 	}
 	
 	// FShader interface.
 	virtual bool Serialize(FArchive& Ar) override
 	{
 		bool bShaderHasOutdatedParameters = FGlobalShader::Serialize(Ar);
-		Ar << ClearColor << ClearTextureRW;
+		Ar << FillColor << Size << OutputBufferRW;
 		return bShaderHasOutdatedParameters;
 	}
 	
-	COMPUTESHADER_API void SetParameters(FRHICommandList& RHICmdList, FUnorderedAccessViewRHIRef TextureRW, const FColor& ClearColorValue);
+	COMPUTESHADER_API void SetParameters(FRHICommandList& RHICmdList, const FRWBufferStructured& TextureRW, const FColor& InFillColor, const uint32 InSize);
 
     void UnbindBuffers(FRHICommandList& RHICmdList);
 
@@ -50,15 +51,16 @@ public:
 	
 	const FShaderParameter& GetClearColorParameter()
 	{
-		return ClearColor;
+		return FillColor;
 	}
 	
 	const FShaderResourceParameter& GetClearTextureRWParameter()
 	{
-		return ClearTextureRW;
+		return OutputBufferRW;
 	}
 	
 protected:
-	FShaderParameter ClearColor;
-	FShaderResourceParameter ClearTextureRW;
+	FShaderParameter FillColor;
+    FShaderParameter Size;
+	FShaderResourceParameter OutputBufferRW;
 };

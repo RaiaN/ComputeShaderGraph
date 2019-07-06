@@ -8,19 +8,18 @@
 
 
 
-float4 ClearColor;
-RWTexture2D<uint> ClearTextureRW; 
+uint FillColor;
+uint Size;
 
-[numthreads(8,8,1)]
-void ClearTexture2DCS(uint2 Position : SV_DispatchThreadID)
+RWStructuredBuffer<uint4> OutputBufferRW;
+
+
+[numthreads(1, 1, 1)]
+void FillBuffer(uint3 DispatchThreadId : SV_DispatchThreadID)
 {
-    // ClearColor = float4(255, 255, 255, 0);
-    
-    uint r = ClearColor.r;
-	uint g = ((uint)(ClearColor.g)) << 8;
-	uint b = ((uint)(ClearColor.b)) << 16;
-    uint a = ((uint)(ClearColor.a)) << 24;
+    uint DestIndex = DispatchThreadId.x;
 
-    ClearTextureRW[Position] = 255;
+    OutputBufferRW[DestIndex] = float4((FillColor >> 24) & 0x000000FF, (FillColor >> 16) & 0x000000FF, (FillColor >> 8) & 0x000000FF, FillColor & 0x000000FF);
+   
 }
 
