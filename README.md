@@ -1,2 +1,2 @@
-# Unreal Engine 4 Compute Shaders Library
-This repo contains examples of compute shaders for Unreal Engine 4.22
+# Unreal Engine 4 Compute Shaders Graph
+This repo provides node-based graph to generate & run compute shaders.
