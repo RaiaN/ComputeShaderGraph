@@ -6,8 +6,7 @@ namespace UnrealBuildTool.Rules
         {
             bEnforceIWYU = true;
 
-            MinFilesUsingPrecompiledHeaderOverride = 1;
-            bFasterWithoutUnity = true;
+            bUseUnity = false;
 
             PublicDependencyModuleNames.AddRange(
 				new string[]

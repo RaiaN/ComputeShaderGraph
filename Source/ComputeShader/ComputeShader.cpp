@@ -10,21 +10,17 @@
 template< typename T >
 void FTestFillTextureCS<T>::SetParameters(FRHICommandList& RHICmdList, const FRWBufferStructured& TextureRW, const FColor& InFillColor, const uint32 InSize)
 {
-	FComputeShaderRHIParamRef ComputeShaderRHI = GetComputeShader();
-    
-    SetShaderValue(RHICmdList, ComputeShaderRHI, FillColor, InFillColor.ToPackedRGBA());
-    SetShaderValue(RHICmdList, ComputeShaderRHI, Size, InSize);
-    SetUAVParameter(RHICmdList, ComputeShaderRHI, OutputBufferRW, TextureRW.UAV);
+    SetShaderValue(RHICmdList, RHICmdList.GetBoundComputeShader(), FillColor, InFillColor.ToPackedRGBA());
+    SetShaderValue(RHICmdList, RHICmdList.GetBoundComputeShader(), Size, InSize);
+    SetUAVParameter(RHICmdList, RHICmdList.GetBoundComputeShader(), OutputBufferRW, TextureRW.UAV);
 }
 
 template< typename T >
 void FTestFillTextureCS<T>::UnbindBuffers(FRHICommandList& RHICmdList)
 {
-    FComputeShaderRHIParamRef ComputeShaderRHI = GetComputeShader();
-
     if (OutputBufferRW.IsBound())
     {
-        RHICmdList.SetUAVParameter(ComputeShaderRHI, OutputBufferRW.GetBaseIndex(), FUnorderedAccessViewRHIRef());
+        RHICmdList.SetUAVParameter(RHICmdList.GetBoundComputeShader(), OutputBufferRW.GetBaseIndex(), FUnorderedAccessViewRHIRef());
     }
 }
 

@@ -65,7 +65,7 @@ void InnerUseComputeShader()
     FRWBufferStructured* RWBufferStructured = new FRWBufferStructured();
     RWBufferStructured->Initialize(BytesPerElement, Size);
 
-    FComputeShaderRHIParamRef ShaderRHI = ComputeShader->GetComputeShader();
+    FRHIComputeShader* ShaderRHI = ComputeShader.GetComputeShader();
     RHICmdList.SetComputeShader(ShaderRHI);
 
     // FIXME: color not passed to compute shader

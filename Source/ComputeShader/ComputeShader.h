@@ -26,14 +26,6 @@ public:
         OutputBufferRW.Bind(Initializer.ParameterMap, TEXT("OutputBufferRW"), SPF_Mandatory);
 	}
 	
-	// FShader interface.
-	virtual bool Serialize(FArchive& Ar) override
-	{
-		bool bShaderHasOutdatedParameters = FGlobalShader::Serialize(Ar);
-		Ar << FillColor << Size << OutputBufferRW;
-		return bShaderHasOutdatedParameters;
-	}
-	
 	COMPUTESHADER_API void SetParameters(FRHICommandList& RHICmdList, const FRWBufferStructured& TextureRW, const FColor& InFillColor, const uint32 InSize);
 
     void UnbindBuffers(FRHICommandList& RHICmdList);
