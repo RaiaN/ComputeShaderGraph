@@ -12,10 +12,9 @@
 
 
 
-template< typename T >
 class FTestFillTextureCS : public FGlobalShader
 {
-	DECLARE_EXPORTED_SHADER_TYPE(FTestFillTextureCS, Global, COMPUTESHADER_API);
+	DECLARE_SHADER_TYPE(FTestFillTextureCS, Global);
 public:
     FTestFillTextureCS() {}
     FTestFillTextureCS(const ShaderMetaType::CompiledShaderInitializerType& Initializer)
@@ -52,7 +51,7 @@ public:
 	}
 	
 protected:
-	FShaderParameter FillColor;
-    FShaderParameter Size;
-	FShaderResourceParameter OutputBufferRW;
+	LAYOUT_FIELD(FShaderParameter, FillColor);
+	LAYOUT_FIELD(FShaderParameter, Size);
+	LAYOUT_FIELD(FShaderResourceParameter, OutputBufferRW);
 };
