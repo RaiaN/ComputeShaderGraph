@@ -19,4 +19,7 @@ class COMPUTESHADER_API UComputeShaderLibrary : public UBlueprintFunctionLibrary
 public:
     UFUNCTION(BlueprintCallable)
     static void UseEngineComputeShader(UTexture2D* InTexture);
+
+    UFUNCTION(BlueprintCallable)
+    static void SelectiveScale(UStaticMeshComponent* InComponent, UStaticMesh* InStaticMesh, const TArray<int32>& AffectedVertices, float ScaleFactor);
 };
