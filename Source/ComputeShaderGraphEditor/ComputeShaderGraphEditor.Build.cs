@@ -1,8 +1,10 @@
+// Copyright Peter Leontev
+
 namespace UnrealBuildTool.Rules
 {
-	public class ComputeShader : ModuleRules
+	public class ComputeShaderGraphEditor : ModuleRules
 	{
-		public ComputeShader(ReadOnlyTargetRules Target) : base(Target)
+		public ComputeShaderGraphEditor(ReadOnlyTargetRules Target) : base(Target)
         {
             bEnforceIWYU = true;
 

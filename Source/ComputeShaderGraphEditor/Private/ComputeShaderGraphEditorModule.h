@@ -1,8 +1,10 @@
+// Copyright Peter Leontev
+
 #pragma once
 
 #include "Modules/ModuleManager.h"
 
-class COMPUTESHADER_API IComputeShaderModule : public IModuleInterface
+class COMPUTESHADERGRAPHEDITOR_API FComputeShaderGraphEditorModule : public IModuleInterface
 {
 public:
 	virtual void StartupModule() override;

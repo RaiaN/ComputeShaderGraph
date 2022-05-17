@@ -1,5 +1,4 @@
-// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
-
+// Copyright Peter Leontev
 
 #pragma once
 
@@ -25,7 +24,7 @@ public:
         OutputBufferRW.Bind(Initializer.ParameterMap, TEXT("OutputBufferRW"), SPF_Mandatory);
 	}
 	
-	COMPUTESHADER_API void SetParameters(FRHICommandList& RHICmdList, const FRWBufferStructured& TextureRW, const FColor& InFillColor, const uint32 InSize);
+	COMPUTESHADERGRAPHRUNTIME_API void SetParameters(FRHICommandList& RHICmdList, const FRWBufferStructured& TextureRW, const FColor& InFillColor, const uint32 InSize);
 
     void UnbindBuffers(FRHICommandList& RHICmdList);
 

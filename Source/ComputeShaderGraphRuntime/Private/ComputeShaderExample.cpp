@@ -1,7 +1,6 @@
-// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
+// Copyright Peter Leontev
 
-
-#include "ComputeShader.h"
+#include "ComputeShaderExample.h"
 #include "ShaderParameterUtils.h"
 #include "RendererInterface.h"
 #include "RHIStaticStates.h"
@@ -22,5 +21,4 @@ void FTestFillTextureCS::UnbindBuffers(FRHICommandList& RHICmdList)
     }
 }
 
-// IMPLEMENT_SHADER_TYPE(template<>, FTestFillTextureCS<float>, TEXT("/Plugin/ComputeShader/Private/ComputeShader.usf"), TEXT("FillBuffer"), SF_Compute);
-IMPLEMENT_SHADER_TYPE(, FTestFillTextureCS, TEXT("/Plugin/ComputeShader/Private/ComputeShader.usf"), TEXT("FillBuffer"), SF_Compute);
+IMPLEMENT_SHADER_TYPE(, FTestFillTextureCS, TEXT("/Plugin/ComputeShaderGraph/Private/ExampleComputeShader.usf"), TEXT("FillBuffer"), SF_Compute);
