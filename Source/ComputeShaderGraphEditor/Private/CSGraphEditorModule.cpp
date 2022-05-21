@@ -1,6 +1,6 @@
 // Copyright Peter Leontev
 
-#include "ComputeShaderGraphEditorModule.h" 
+#include "CSGraphEditorModule.h" 
 
 void FComputeShaderGraphEditorModule::StartupModule()
 {

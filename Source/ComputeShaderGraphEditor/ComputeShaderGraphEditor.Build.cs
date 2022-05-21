@@ -22,6 +22,22 @@ namespace UnrealBuildTool.Rules
                     "Projects"
 				}
 			);
-		}
+
+            PrivateDependencyModuleNames.AddRange(
+                new string[]
+                {
+                    "UnrealEd",
+                    "GraphEditor",
+                    "Slate",
+                    "SlateCore",
+                    "BlueprintGraph",
+                    "ApplicationCore",
+                    "EditorStyle",
+                    "ToolMenus",
+                    "AssetTools",
+                    "ComputeShaderGraphRuntime"
+                }
+            );
+        }
 	}
 }
