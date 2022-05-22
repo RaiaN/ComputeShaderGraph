@@ -1,4 +1,5 @@
 #include "Nodes/ComputeShaderNode.h"
+#include "ComputeShader.h"
 
 void UComputeShaderNode::GetAllNodes(TArray<UComputeShaderNode*>& OutComputeShaderNodes)
 {
@@ -14,17 +15,35 @@ void UComputeShaderNode::GetAllNodes(TArray<UComputeShaderNode*>& OutComputeShad
 
 void UComputeShaderNode::CreateStartingConnectors(void)
 {
-    // TODO:
+    int32 ConnectorsToMake = FMath::Max(1, GetMinChildNodes());
+    while (ConnectorsToMake > 0)
+    {
+        InsertChildNode(ChildNodes.Num());
+        --ConnectorsToMake;
+    }
 }
 
 void UComputeShaderNode::InsertChildNode(int32 Index)
 {
-    // TODO:
+    check( Index >= 0 && Index <= ChildNodes.Num() );
+	int32 MaxChildNodes = GetMaxChildNodes();
+	if (MaxChildNodes > ChildNodes.Num())
+	{
+		ChildNodes.InsertZeroed( Index );
+#if WITH_EDITOR
+        UComputeShader::GetComputeShaderEdGraphEditor()->CreateInputPin(GetGraphNode());
+#endif //WITH_EDITORONLY_DATA
+	}
 }
 
 void UComputeShaderNode::RemoveChildNode(int32 Index)
 {
-    // TODO:
+    check(Index >= 0 && Index < ChildNodes.Num());
+    int32 MinChildNodes = GetMinChildNodes();
+    if (ChildNodes.Num() > MinChildNodes)
+    {
+        ChildNodes.RemoveAt(Index);
+    }
 }
 
 #if WITH_EDITOR
