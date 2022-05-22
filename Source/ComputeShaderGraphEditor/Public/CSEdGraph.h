@@ -8,12 +8,14 @@
 class UComputeShader;
 
 
-UCLASS(MinimalAPI) 
-class UComputeShaderEdGraph : public UEdGraph
+UCLASS() 
+class COMPUTESHADERGRAPHEDITOR_API UComputeShaderEdGraph : public UEdGraph
 {
     GENERATED_BODY()
 
 public:
+    UComputeShaderEdGraph(const FObjectInitializer& Initializer);
+
     /** Returns the ComputeShader that contains this graph */
     UComputeShader* GetComputeShader() const;
 };

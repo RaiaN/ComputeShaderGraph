@@ -6,9 +6,7 @@
 #include "Toolkits/IToolkitHost.h"
 #include "AssetTypeActions_Base.h"
 
-class USoundCue;
-
-class FAssetTypeActions_SoundCue : public FAssetTypeActions_Base
+class FAssetTypeActions_ComputeShader : public FAssetTypeActions_Base
 {
 public:
 	// IAssetTypeActions Implementation
@@ -18,4 +16,6 @@ public:
 	virtual void GetActions(const TArray<UObject*>& InObjects, struct FToolMenuSection& Section) override;
 	virtual void OpenAssetEditor( const TArray<UObject*>& InObjects, TSharedPtr<class IToolkitHost> EditWithinLevelEditor = TSharedPtr<IToolkitHost>() ) override;
 	virtual bool CanFilter() override { return true; }
+    /** Returns the categories that this asset type appears in. The return value is one or more flags from EAssetTypeCategories.  */
+    virtual uint32 GetCategories() override;
 };

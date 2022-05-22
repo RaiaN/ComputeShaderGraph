@@ -858,7 +858,7 @@ bool FComputeShaderEditor::CanPasteNodes() const
 	FString ClipboardContent;
 	FPlatformApplicationMisc::ClipboardPaste(ClipboardContent);
 
-	return FEdGraphUtilities::CanImportNodesFromText(ComputeShader->SoundCueGraph, ClipboardContent);
+	return FEdGraphUtilities::CanImportNodesFromText(ComputeShader->ComputeShaderGraph, ClipboardContent);
 }
 
 void FComputeShaderEditor::DuplicateNodes()

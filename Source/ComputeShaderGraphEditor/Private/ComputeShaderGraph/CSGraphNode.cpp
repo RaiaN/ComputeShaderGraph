@@ -69,10 +69,8 @@ void UComputeShaderGraphNode::AddInputPin()
 	CreateInputPin();
 
 	UComputeShader* ComputeShader = CastChecked<UComputeShaderEdGraph>(GetGraph())->GetComputeShader();
-	// TODO
-	// FIXME
-	// ComputeShader->CompileSoundNodesFromGraphNodes();
-	// ComputeShader->MarkPackageDirty();
+	ComputeShader->CompileFromGraphNodes();
+	ComputeShader->MarkPackageDirty();
 
 	// Refresh the current graph, so the pins can be updated
 	GetGraph()->NotifyGraphChanged();
@@ -100,7 +98,7 @@ void UComputeShaderGraphNode::RemoveInputPin(UEdGraphPin* InGraphPin)
 	}
 
 	UComputeShader* ComputeShader = CastChecked<UComputeShaderEdGraph>(GetGraph())->GetComputeShader();
-	ComputeShader->CompileSoundNodesFromGraphNodes();
+	ComputeShader->CompileFromGraphNodes();
 	ComputeShader->MarkPackageDirty();
 
 	// Refresh the current graph, so the pins can be updated

@@ -46,6 +46,12 @@ public:
 #endif
 
 #if WITH_EDITOR
+	/**
+    * Set the entire Child Node array directly, allows GraphNodes to fully control node layout.
+    * Can be overwritten to set up additional parameters that are tied to children.
+    */
+	virtual void SetChildNodes(TArray<UComputeShaderNode*>& InChildNodes);
+
     virtual FText GetInputPinName(int32 PinIndex) const { return FText::GetEmpty(); }
     virtual FText GetTitle() const { return GetClass()->GetDisplayNameText(); }
     /** Helper function to set the position of a sound node on a grid */

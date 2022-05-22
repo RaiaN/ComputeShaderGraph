@@ -19,7 +19,7 @@ struct FPropertyChangedEvent;
 struct Rect;
 
 /*-----------------------------------------------------------------------------
-   FSoundCueEditor
+   FComputeShaderEditor
 -----------------------------------------------------------------------------*/
 
 class FComputeShaderEditor : public IComputeShaderEditor, public FGCObject, public FNotifyHook, public FEditorUndoClient

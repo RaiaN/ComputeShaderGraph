@@ -1,23 +1,30 @@
 {
-  "PluginFileVersion": 3,
-  "FriendlyName": "Compute Shader Graph",
-  "Version": 1,
-  "VersionName": "1.0",
-  "CreatedBy": "Peter Leontev",
-  "CreatedByURL": "leontev.petr@gmail.com",
-  "EngineVersion": "",
-  "Description": "Compute Shader Graph makes it possible to quickly create compute shaders for your own needs",
-  "Category": "Shader",
-  "Modules": [
-    {
-      "Name": "ComputeShaderGraphRuntime",
-      "Type": "Runtime",
-      "LoadingPhase": "PostConfigInit"
-    },
-    {
-      "Name": "ComputeShaderGraphEditor",
-      "Type": "Editor",
-      "LoadingPhase": "Default"
-    }
-  ]
+	"PluginFileVersion": 3,
+	"FriendlyName": "Compute Shader Graph",
+	"Version": 1,
+	"VersionName": "1.0",
+	"CreatedBy": "Peter Leontev",
+	"CreatedByURL": "leontev.petr@gmail.com",
+	"CanContainContent": true,
+	"Description": "Compute Shader Graph makes it possible to quickly create compute shaders for your own needs",
+	"Category": "Shader",
+	"Modules": [
+		{
+			"Name": "ComputeShaderGraphRuntime",
+			"Type": "Runtime",
+			"LoadingPhase": "PostConfigInit"
+		},
+		{
+			"Name": "ComputeShaderGraphEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	],
+	"FileVersion": 3,
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false
 }

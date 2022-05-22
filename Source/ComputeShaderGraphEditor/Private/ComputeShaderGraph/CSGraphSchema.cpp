@@ -237,9 +237,7 @@ bool UComputeShaderGraphSchema::TryCreateConnection(UEdGraphPin* PinA, UEdGraphP
 
 	if (bModified)
 	{
-        // TODO
-        // FIXME
-		// CastChecked<UComputeShaderEdGraph>(PinA->GetOwningNode()->GetGraph())->GetComputeShader()->CompileSoundNodesFromGraphNodes();
+        CastChecked<UComputeShaderEdGraph>(PinA->GetOwningNode()->GetGraph())->GetComputeShader()->CompileFromGraphNodes();
 	}
 
 	return bModified;
@@ -259,9 +257,7 @@ void UComputeShaderGraphSchema::BreakNodeLinks(UEdGraphNode& TargetNode) const
 {
 	Super::BreakNodeLinks(TargetNode);
 	
-	// TODO
-	// FIXME
-	// CastChecked<UComputeShaderEdGraph>(TargetNode.GetGraph())->GetComputeShader()->CompileSoundNodesFromGraphNodes();
+	CastChecked<UComputeShaderEdGraph>(TargetNode.GetGraph())->GetComputeShader()->CompileFromGraphNodes();
 }
 
 void UComputeShaderGraphSchema::BreakPinLinks(UEdGraphPin& TargetPin, bool bSendsNodeNotifcation) const
@@ -273,9 +269,7 @@ void UComputeShaderGraphSchema::BreakPinLinks(UEdGraphPin& TargetPin, bool bSend
 	// if this would notify the node then we need to compile the SoundCue
 	if (bSendsNodeNotifcation)
 	{
-        // TODO
-        // FIXME
-		// CastChecked<USoundCueGraph>(TargetPin.GetOwningNode()->GetGraph())->GetSoundCue()->CompileSoundNodesFromGraphNodes();
+        CastChecked<UComputeShaderEdGraph>(TargetPin.GetOwningNode()->GetGraph())->GetComputeShader()->CompileFromGraphNodes();
 	}
 }
 
