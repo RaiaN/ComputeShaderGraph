@@ -12,6 +12,6 @@ class UComputeShaderNode_Texture : public UComputeShaderNode
     GENERATED_BODY()
 
 public:
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
     UTexture2D* Texture;
 };
