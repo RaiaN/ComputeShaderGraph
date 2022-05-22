@@ -187,7 +187,7 @@ private:
 	TSharedPtr<class IDetailsView> ComputeShaderProperties;
 
 	/** Palette of Sound Node types */
-	TSharedPtr<class SSoundCuePalette> Palette;
+	TSharedPtr<class SComputeShaderPalette> Palette;
 
 	/** Command list for this editor */
 	TSharedPtr<FUICommandList> GraphEditorCommands;

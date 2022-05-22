@@ -132,7 +132,7 @@ bool UComputeShaderGraphSchema::ConnectionCausesLoop(const UEdGraphPin* InputPin
 
 void UComputeShaderGraphSchema::GetPaletteActions(FGraphActionMenuBuilder& ActionMenuBuilder) const
 {
-	GetAllSoundNodeActions(ActionMenuBuilder, false);
+	GetAllComputeShaderNodeActions(ActionMenuBuilder, false);
 	GetCommentAction(ActionMenuBuilder);
 }
 
@@ -154,7 +154,7 @@ void UComputeShaderGraphSchema::TryConnectNodes(const TArray<UComputeShaderNode*
 
 void UComputeShaderGraphSchema::GetGraphContextActions(FGraphContextMenuBuilder& ContextMenuBuilder) const
 {
-	GetAllSoundNodeActions(ContextMenuBuilder, true);
+	GetAllComputeShaderNodeActions(ContextMenuBuilder, true);
 
 	// GetCommentAction(ContextMenuBuilder, ContextMenuBuilder.CurrentGraph);
 
@@ -456,7 +456,7 @@ void UComputeShaderGraphSchema::DroppedAssetsOnNode(const TArray<FAssetData>& As
 	SoundCueGraph->NotifyGraphChanged();*/
 }
 
-void UComputeShaderGraphSchema::GetAllSoundNodeActions(FGraphActionMenuBuilder& ActionMenuBuilder, bool bShowSelectedActions) const
+void UComputeShaderGraphSchema::GetAllComputeShaderNodeActions(FGraphActionMenuBuilder& ActionMenuBuilder, bool bShowSelectedActions) const
 {
 	InitComputeShaderNodeClasses();
 

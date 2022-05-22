@@ -23,6 +23,7 @@
 #include "ComputeShaderGraph/CSGraphSchema.h"
 #include "ComputeShader.h"
 #include "ComputeShaderNode.h"
+#include "Palette/SComputeShaderPalette.h"
 
 #define LOCTEXT_NAMESPACE "ComputeShaderEditor"
 
@@ -52,10 +53,10 @@ void FComputeShaderEditor::RegisterTabSpawners(const TSharedRef<class FTabManage
 		.SetGroup(WorkspaceMenuCategoryRef)
 		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Details"));
 
-	/*InTabManager->RegisterTabSpawner(PaletteTabId, FOnSpawnTab::CreateSP(this, &FComputeShaderEditor::SpawnTab_Palette))
+	InTabManager->RegisterTabSpawner(PaletteTabId, FOnSpawnTab::CreateSP(this, &FComputeShaderEditor::SpawnTab_Palette))
 		.SetDisplayName( LOCTEXT("PaletteTab", "Palette") )
 		.SetGroup(WorkspaceMenuCategoryRef)
-		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "Kismet.Tabs.Palette"));*/
+		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "Kismet.Tabs.Palette"));
 }
 
 void FComputeShaderEditor::UnregisterTabSpawners(const TSharedRef<class FTabManager>& InTabManager)
@@ -225,15 +226,12 @@ TSharedRef<SDockTab> FComputeShaderEditor::SpawnTab_Palette(const FSpawnTabArgs&
 {
 	check( Args.GetTabId() == PaletteTabId );
 
-	// FIXME
-	// TODO
-
 	return SNew(SDockTab)
 	    .Icon(FEditorStyle::GetBrush("Kismet.Tabs.Palette"))
-		.Label(LOCTEXT("ComputeShaderPaletteTitle", "Palette"));
-		/*[
+		.Label(LOCTEXT("ComputeShaderPaletteTitle", "Palette"))
+		[
 			Palette.ToSharedRef()
-		];*/
+		];
 }
 
 void FComputeShaderEditor::AddReferencedObjects(FReferenceCollector& Collector)
@@ -272,9 +270,7 @@ void FComputeShaderEditor::CreateInternalWidgets()
 	ComputeShaderProperties = PropertyModule.CreateDetailView(Args);
 	ComputeShaderProperties->SetObject( ComputeShader );
 
-	// FIXME
-	// TODO
-	// Palette = SNew(SSoundCuePalette);
+	Palette = SNew(SComputeShaderPalette);
 }
 
 void FComputeShaderEditor::ExtendToolbar()

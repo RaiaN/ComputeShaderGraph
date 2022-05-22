@@ -132,8 +132,8 @@ public:
 	//~ End EdGraphSchema Interface
 
 private:
-	/** Adds actions for creating every type of SoundNode */
-	void GetAllSoundNodeActions(FGraphActionMenuBuilder& ActionMenuBuilder, bool bShowSelectedActions) const;
+	/** Adds actions for creating every type of ComputeShaderNode */
+	void GetAllComputeShaderNodeActions(FGraphActionMenuBuilder& ActionMenuBuilder, bool bShowSelectedActions) const;
 	/** Adds action for creating a comment */
 	void GetCommentAction(FGraphActionMenuBuilder& ActionMenuBuilder, const UEdGraph* CurrentGraph = NULL) const;
 
