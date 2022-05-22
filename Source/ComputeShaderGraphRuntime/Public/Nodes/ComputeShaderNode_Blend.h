@@ -11,6 +11,7 @@ class UComputeShaderNode_Blend : public UComputeShaderNode
 {
     GENERATED_BODY()
 
-public:
-    // TODO: blend mode
+protected:
+    virtual int32 GetMaxChildNodes() const override { return 2; }
+    virtual int32 GetMinChildNodes() const override { return 2; }
 };

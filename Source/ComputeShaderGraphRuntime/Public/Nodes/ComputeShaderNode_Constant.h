@@ -14,4 +14,7 @@ class UComputeShaderNode_Constant : public UComputeShaderNode
 public:
     UPROPERTY(EditAnywhere)
     FLinearColor Color;
+
+    int32 GetMaxChildNodes() const override;
+
 };

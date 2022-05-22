@@ -12,6 +12,9 @@ class UComputeShaderNode_Texture : public UComputeShaderNode
     GENERATED_BODY()
 
 public:
+    int32 GetMaxChildNodes() const override;
+
+public:
 	UPROPERTY(EditAnywhere)
     UTexture2D* Texture;
 };
