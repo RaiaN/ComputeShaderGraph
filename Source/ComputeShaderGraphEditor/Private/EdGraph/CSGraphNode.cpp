@@ -3,13 +3,13 @@
 #include "CSGraphNode.h"
 #include "ToolMenus.h"
 #include "Editor/EditorEngine.h"
-#include "CSEdGraph.h"
 #include "GraphEditorActions.h"
 #include "ScopedTransaction.h"
 #include "Framework/Commands/GenericCommands.h"
 #include "Engine/Font.h"
+#include "Nodes/ComputeShaderNode.h"
+#include "EdGraph/CSEdGraph.h"
 #include "ComputeShader.h"
-#include "ComputeShaderNode.h"
 
 #define LOCTEXT_NAMESPACE "CSGraphNode"
 

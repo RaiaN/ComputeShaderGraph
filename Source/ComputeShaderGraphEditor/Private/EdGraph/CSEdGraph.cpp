@@ -1,14 +1,14 @@
 // Copyright Peter Leontev
 
-#include "CSEdGraph.h"
+#include "EdGraph/CSEdGraph.h"
 #include "Kismet2/BlueprintEditorUtils.h"
 #include "EdGraph/EdGraphSchema.h"
+#include "EdGraph/CSGraphSchema.h"
+#include "EdGraph/CSGraphNode_Root.h"
+#include "EdGraph/CSGraphNode_Base.h"
+#include "EdGraph/CSGraphNode.h"
+#include "Nodes/ComputeShaderNode.h"
 #include "ComputeShader.h"
-#include "ComputeShaderNode.h"
-#include "ComputeShaderGraph/CSGraphSchema.h"
-#include "ComputeShaderGraph/CSGraphNode_Root.h"
-#include "ComputeShaderGraph/CSGraphNode_Base.h"
-#include "ComputeShaderGraph/CSGraphNode.h"
 
 
 class FComputeShaderEdGraphEditor : public IComputeShaderEdGraphEditor

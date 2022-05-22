@@ -1,7 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "SComputeShaderPalette.h"
-#include "ComputeShaderGraph/CSGraphSchema.h"
+#include "EdGraph/CSGraphSchema.h"
 
 void SComputeShaderPalette::Construct(const FArguments& InArgs)
 {

@@ -5,7 +5,7 @@
 
 class UEdGraphNode;
 
-UCLASS(BlueprintType)
+UCLASS(abstract, hidecategories = Object, editinlinenew)
 class COMPUTESHADERGRAPHRUNTIME_API UComputeShaderNode : public UObject
 {
     GENERATED_BODY()

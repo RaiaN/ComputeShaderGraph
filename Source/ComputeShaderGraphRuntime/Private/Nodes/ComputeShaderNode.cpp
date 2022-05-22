@@ -1,4 +1,4 @@
-#include "ComputeShaderNode.h"
+#include "Nodes/ComputeShaderNode.h"
 
 void UComputeShaderNode::GetAllNodes(TArray<UComputeShaderNode*>& OutComputeShaderNodes)
 {

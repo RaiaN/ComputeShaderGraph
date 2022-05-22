@@ -1,7 +1,7 @@
 #include "ComputeShader.h"
 #include "Kismet2/BlueprintEditorUtils.h"
 #include "EdGraph/EdGraphSchema.h"
-#include "ComputeShaderNode.h"
+#include "Nodes/ComputeShaderNode.h"
 
 
 UComputeShader::UComputeShader(const FObjectInitializer& Initializer)

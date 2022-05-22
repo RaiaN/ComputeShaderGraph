@@ -10,17 +10,19 @@
 #include "Layout/SlateRect.h"
 #include "Framework/MultiBox/MultiBoxBuilder.h"
 #include "ToolMenus.h"
-#include "EdGraphNode_Comment.h"
-#include "EdGraph/EdGraph.h"
-#include "CSEdGraph.h"
-#include "CSGraphNode.h"
-#include "CSGraphNode_Root.h"
-#include "ComputeShader.h"
-#include "ComputeShaderNode.h"
 #include "GraphEditorActions.h"
 #include "ScopedTransaction.h"
 #include "GraphEditor.h"
 #include "Engine/Selection.h"
+#include "EdGraphNode_Comment.h"
+#include "EdGraph/EdGraph.h"
+#include "EdGraph/CSEdGraph.h"
+#include "EdGraph/CSGraphNode.h"
+#include "EdGraph/CSGraphNode_Root.h"
+#include "Nodes/ComputeShaderNode.h"
+#include "ComputeShader.h"
+
+
 
 #define LOCTEXT_NAMESPACE "ComputeShaderGraphSchema"
 
