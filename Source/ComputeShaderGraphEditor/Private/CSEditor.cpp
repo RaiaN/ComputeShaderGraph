@@ -653,9 +653,7 @@ void FComputeShaderEditor::DeleteSelectedNodes()
 				FBlueprintEditorUtils::RemoveNode(NULL, ComputeShaderGraphNode, true);
 
 				// Make sure ComputeShader is updated to match graph
-				// TODO
-				// FIXME
-				// ComputeShader->CompileSoundNodesFromGraphNodes();
+				ComputeShader->CompileFromGraphNodes();
 
 				// Remove this node from the ComputeShader's list of all SoundNodes
 				ComputeShader->AllNodes.Remove(DelNode);
@@ -841,10 +839,8 @@ void FComputeShaderEditor::PasteNodesHere(const FVector2D& Location)
 		Node->CreateNewGuid();
 	}
 
-	// Force new pasted SoundNodes to have same connections as graph nodes
-	// TODO
-	// FIXME
-	// ComputeShader->CompileSoundNodesFromGraphNodes();
+	// Force new pasted ComputeShaderNodes to have same connections as graph nodes
+	ComputeShader->CompileFromGraphNodes();
 
 	// Update UI
 	CSGraphEditor->NotifyGraphChanged();

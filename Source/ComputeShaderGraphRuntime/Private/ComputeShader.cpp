@@ -85,7 +85,7 @@ void UComputeShader::ResetGraph()
 
 void UComputeShader::SetComputeShaderEdGraphEditor(TSharedPtr<IComputeShaderEdGraphEditor> InEditor)
 {
-    check(!InEditor.IsValid());
+    check(!ComputeShaderEdGraphEditor.IsValid());
     ComputeShaderEdGraphEditor = InEditor;
 }
 

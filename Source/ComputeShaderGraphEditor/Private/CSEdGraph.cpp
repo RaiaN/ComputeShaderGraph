@@ -166,7 +166,10 @@ public:
 
 UComputeShaderEdGraph::UComputeShaderEdGraph(const FObjectInitializer& Initializer)
 {
-    
+    if (!UComputeShader::GetComputeShaderEdGraphEditor().IsValid())
+    {
+        UComputeShader::SetComputeShaderEdGraphEditor(TSharedPtr<IComputeShaderEdGraphEditor>(new FComputeShaderEdGraphEditor()));
+    }
 }
 
 UComputeShader* UComputeShaderEdGraph::GetComputeShader() const
